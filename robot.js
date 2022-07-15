@@ -1,13 +1,12 @@
-class Car {
+class Robot {
 	constructor(x, y, width, height, controlType, maxSpeed = 3) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 
-		this.speed = 0;
-		this.acceleration = 0.2;
-		// this.maxSpeed = 3;
+		this.speed = 0;          // unit: m/s
+		this.acceleration = 0.2; // unit: m/s^2
 		this.maxSpeed = maxSpeed;
 		this.friction = 0.05;
 		this.angle = 0;
@@ -16,7 +15,6 @@ class Car {
 		if (controlType !== "DUMMY") {
 			this.sensor = new Sensor(this);
 		}
-		// this.sensor = new Sensor(this);
 		this.controls = new Controls(controlType);
 	}
 
@@ -109,40 +107,13 @@ class Car {
 
 		this.x -= Math.sin(this.angle) * this.speed;
 		this.y -= Math.cos(this.angle) * this.speed;
-		// this.y -= this.speed;
-
-	}
-
-	draw0(ctx) {
-		ctx.save();
-		ctx.translate(this.x, this.y);
-		ctx.rotate(-this.angle);
-
-		ctx.beginPath();
-		ctx.rect(
-			// this.x - this.width / 2,
-			// this.y - this.height / 2,
-			- this.width / 2,
-			- this.height / 2,
-			this.width,
-			this.height
-		)
-		ctx.fill();
-
-		ctx.restore();
-
-		this.sensor.draw(ctx);
 	}
 
 	draw(ctx, color) {
 		if (!this.polygon) { return; }
 		console.log(this.polygon);
 
-		if (this.damaged) {
-			ctx.fillStyle = "gray";
-		} else {
-			ctx.fillStyle = color;
-		}
+		ctx.fillStyle = (this.damaged) ? "gray" : color;
 
 		ctx.beginPath();
 		ctx.moveTo(this.polygon[0].x, this.polygon[0].y);
@@ -152,9 +123,7 @@ class Car {
 		ctx.fill();
 
 		if (this.sensor) {
-
 			this.sensor.draw(ctx);
 		}
 	}
-
 }

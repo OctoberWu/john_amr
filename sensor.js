@@ -1,6 +1,6 @@
 class Sensor {
-	constructor(car) {
-		this.car = car;
+	constructor(robot) {
+		this.robot = robot;
 		this.rayCount = 270;
 		this.rayLength = 100;
 		this.raySpread = Math.PI / 2 * 3;
@@ -46,12 +46,11 @@ class Sensor {
 	#castRays() {
 		this.rays = [];
 		for (let i = 0; i < this.rayCount; i++) {
-			// const rayAngle = lerp(this.raySpread / 2, -this.raySpread / 2, i / (this.rayCount - 1)) + this.car.angle;
-			const rayAngle = lerp(this.raySpread / 2, -this.raySpread / 2, i / (this.rayCount - 1)) + this.car.angle;
-			const start = { x: this.car.x, y: this.car.y };
+			const rayAngle = lerp(this.raySpread / 2, -this.raySpread / 2, i / (this.rayCount - 1)) + this.robot.angle;
+			const start = { x: this.robot.x, y: this.robot.y };
 			const end = {
-				x: this.car.x - Math.sin(rayAngle) * this.rayLength,
-				y: this.car.y - Math.cos(rayAngle) * this.rayLength
+				x: this.robot.x - Math.sin(rayAngle) * this.rayLength,
+				y: this.robot.y - Math.cos(rayAngle) * this.rayLength
 			};
 			this.rays.push([start, end]);
 		}
@@ -71,9 +70,6 @@ class Sensor {
 			ctx.lineWidth = 2;
 			// ctx.strokeStyle = "yellow";
 			ctx.strokeStyle = 'rgba(255, 255, 0, 0.3)';
-			// console.log(i);
-			// console.log(this.rays);
-			// console.log(this.rays[i]);
 			ctx.moveTo(this.rays[i][0].x, this.rays[i][0].y);
 			// ctx.lineTo(this.rays[i][1].x, this.rays[i][1].y)
 			ctx.lineTo(end.x, end.y)
